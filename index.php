@@ -51,7 +51,7 @@ function findAndCompare($link1, $link2){
 $link1 = (isset($_GET['link1']) AND !empty($_GET['link1'])) ? $_GET['link1'] : false;
 $link2 = (isset($_GET['link2']) AND !empty($_GET['link2'])) ? $_GET['link2'] : false;
 $download = (isset($_GET['download'])) ? true  : false;
-if($link1 AND $link2){
+if($link1 AND $link2 AND false){
     $output = findAndCompare($link1, $link2);
 
     // download the file
@@ -91,8 +91,8 @@ if($link1 AND $link2){
             margin: 0 auto;
         }
         .form input[type="text"]{
-            min-width: 100%;
-            display: block;
+            min-width: 230px;
+            display: inline-block;
             margin:4px;
         }
         .form .button{
@@ -109,11 +109,15 @@ if($link1 AND $link2){
 </head>
 <body>
 <form class="form" action="index.php">
+    <div class="info_container">
+        <div class="item"><span>Total characters: </span><span id="sym_num"></span></div>
+    </div>
     <div class="form_container">
-        <input type="text" name="link1" placeholder="Link 1" value="<?=$link1?>">
-        <input type="text" name="link2" placeholder="Link 2" value="<?=$link2?>">
+        <label><input type="text" id="link1" name="link1" placeholder="Domain 1" value="<?=$link1?>"><span>Sum: </span><span id="sum1"></span></label>
+        <label><input type="text" id="link2" name="link2" placeholder="Domain 2" value="<?=$link2?>"><span>Sum: </span><span id="sum2"></span></label>
         <input type="submit" class="button" value="Compare and show">
         <input type="submit" name="download" class="button" value="Compare and download CSV">
+
     </div>
     <div class="output">
         <?php if($output): ?>
@@ -125,7 +129,41 @@ if($link1 AND $link2){
         <?php endif?>
     </div>
 </form>
+<script>
+    (function(){
+        // prepare data
+        var sym_num = document.getElementById('sym_num');
+        var link1 = document.getElementById('link1');
+        var link2 = document.getElementById('link2');
+        var sum1 = document.getElementById('sum1');
+        var sum2 = document.getElementById('sum2');
+        var get_sym_alphabet = function(word, elem){
+            var sum = 0;
+            word.toUpperCase().split('').forEach(function(alphabet) {
+                sum += alphabet.charCodeAt(0) - 64;
+            });
+            elem.innerHTML = sum;
+        }
+        var update_sym_num = function(){
+            sym_num.innerHTML = link1.value.length + link2.value.length;
+        };
 
+        // set events
+       link1.oninput = function(){
+           update_sym_num();
+           get_sym_alphabet(this.value, sum1);
+       };
+       link2.oninput = function(){
+           update_sym_num();
+           get_sym_alphabet(this.value, sum2);
+       };
+        // initial update
+        update_sym_num();
+        get_sym_alphabet(link1.value, sum1);
+        get_sym_alphabet(link2.value, sum2);
+
+    })();
+</script>
 
 </body>
 </html>
