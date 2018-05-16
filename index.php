@@ -8,10 +8,7 @@ function getHrefLinks($selector, $link){
     $result = [];
     foreach ($selector as $item) {
         $parsedUrl = parse_url($link);
-        //die(print_r($parsedUrl));
-//        if(!preg_match('#^(http\:)#', $item->href)){
-//            $item->href = 'http:'.$item->href;
-//        }
+
         if(strpos($item->href, $parsedUrl['host']) AND !in_array($item->href, $result)){
 
             $result[] = $item->href;
@@ -66,7 +63,6 @@ if($link1 AND $link2){
 
         $file = fopen('php://output', 'w');
 
-    // send the column headers
         fputcsv($file, array('domain 1', 'domain 2', 'percentage'));
 
         foreach ($output as $row) {
