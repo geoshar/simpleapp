@@ -51,9 +51,9 @@ function findAndCompare($link1, $link2){
 $link1 = (isset($_GET['link1']) AND !empty($_GET['link1'])) ? $_GET['link1'] : false;
 $link2 = (isset($_GET['link2']) AND !empty($_GET['link2'])) ? $_GET['link2'] : false;
 $download = (isset($_GET['download'])) ? true  : false;
-if($link1 AND $link2 AND false){
-    $output = findAndCompare($link1, $link2);
 
+if($link1 AND $link2){
+    $output = findAndCompare($link1, $link2);
     // download the file
     if($download) {
         header('Content-type: text/csv');
