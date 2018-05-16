@@ -24,7 +24,7 @@ function findAndCompare($link1, $link2){
     $page2 = file_get_html($link2);
     // get all the links on both sites
     $linksPage1 = getHrefLinks($page1->find('a'), $link1);
-    //die(print_r($linksPage1));
+
     $linksPage2 = getHrefLinks($page2->find('a'), $link2);
     // comparation
     $result = [];
