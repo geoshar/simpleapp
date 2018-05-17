@@ -1,0 +1,26 @@
+body{
+    margin: 30px auto;
+    text-align: center;
+}
+.form{
+    margin:0 auto;
+}
+.form_container {
+    width: 320px;
+    margin: 0 auto;
+}
+.form input[type="text"]{
+    min-width: 230px;
+    display: inline-block;
+    margin:4px;
+}
+.form .button{
+    margin:4px;
+}
+.form .output{
+    text-align:left;
+    padding:20px;
+}
+.form .output .item a{
+    display:inline-block;
+}
