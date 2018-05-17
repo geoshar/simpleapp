@@ -8,11 +8,17 @@ body{
 .form_container {
     width: 320px;
     margin: 0 auto;
+    text-align:left;
 }
-.form input[type="text"]{
+.form input
+{
     min-width: 230px;
     display: inline-block;
     margin:4px;
+}
+.form label{
+    min-width: 230px;
+    display:block;
 }
 .form .button{
     margin:4px;

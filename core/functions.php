@@ -5,9 +5,8 @@
  * Date: 17/05/2018
  * Time: 14:57
  */
-// returns an array with all links reffered on the same domain name
-require_once('libs/simple_html_dom.php');
 
+// returns an array with all links reffered on the same domain name
 function getHrefLinks($link){
     $result = [];
     $selector = file_get_html($link)->find('a');
@@ -21,7 +20,8 @@ function getHrefLinks($link){
     }
     return $result;
 }
-function compareLinks($linksPage1, $linksPage2){
+
+function compareLinks($linksPage1, $linksPage2, $sort){
     $result = [];
     foreach ($linksPage1 as $href1){
 
@@ -40,6 +40,31 @@ function compareLinks($linksPage1, $linksPage2){
         }
         array_multisort($percentages, SORT_DESC, $percentSimilarity);
         $result[] = [$href1, $percentSimilarity[0][1], round($percentSimilarity[0][2], 2). '%'];
+    }
+    // check if need to be sorted
+    if($sort) {
+        // sort desc all results by percentages
+        $resultPercentages = [];
+        foreach ($result as $row) {
+            $resultPercentages[] = $row[2];
+        }
+        array_multisort($resultPercentages, SORT_DESC, $result);
+    }
+    return $result;
+}
+
+// find links on both sites, and compare,
+// returning an array with objects of @link1 @link2 @percentage
+function findAndCompare($link1, $link2, $sort){
+
+    if($link1 AND $link2) {
+        // get all the links on both sites
+        $linksPage1 = getHrefLinks($link1);
+        $linksPage2 = getHrefLinks($link2);
+        // comparation
+        $result = compareLinks($linksPage1, $linksPage2, $sort);
+    }else {
+        $result = false;
     }
     return $result;
 }
